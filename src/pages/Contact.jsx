@@ -1,13 +1,19 @@
 import React, { useState, useRef } from 'react'
 import emailjs from "@emailjs/browser"
+import { Suspense } from "react"
+import Loader from '../components/Loader';
+import { Canvas } from '@react-three/fiber';
+import Fox from "../models/Fox"
+// import Fox from ""
 function Contact() {
   const formRef = useRef();
   const [form, setForm] = useState({ name: "", email: "", message: "" })
   const [isLoading, setisLoading] = useState(false)
+  const [currentAnimation, setCurrentAnimation] = useState("idle")
   const handleSubmit = async (e) => {
     e.preventDefault();
     setisLoading(true);
-  
+    setCurrentAnimation("hit")
     try {
       await emailjs.send(
         import.meta.env.VITE_APP_EMAILJS_SEVICE_ID,
@@ -21,15 +27,19 @@ function Contact() {
         },
         import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY,
       );
-      
+
       // Success case: handle showing success message
       // Todo: Show success message
       console.log("Email sent successfully!");
-      setForm({name:"",email:"",message:""})
-  
+      setTimeout(()=>{
+        setCurrentAnimation("idle")
+        setForm({ name: "", email: "", message: "" })
+      },[2000])
+
     } catch (error) {
       // Error case: handle showing error message
       console.error("Failed to send email:", error);
+      setCurrentAnimation("idle")
       // Todo: Show error message to the user (e.g., with an alert or a message on the page)
       alert("Failed to send email. Please try again later.");
     } finally {
@@ -37,16 +47,12 @@ function Contact() {
       // Todo: Hide alert
     }
   };
-  
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: [e.target.value] })
   }
-  const handleFocus = () => {
-
-  }
-  const handleBlur = () => {
-
-  }
+  const handleFocus = () => setCurrentAnimation("walk")
+  const handleBlur = () => setCurrentAnimation("idle")
   return (
     <section className='relative flex lg:flex-row flex-col max-container'>
       <div className='flex-1 min-w-[50%] flex flex-col'>
@@ -108,6 +114,26 @@ function Contact() {
             </button>
           </div>
         </form>
+      </div>
+      <div className='lg:w-1/2 w-full lg:h-auto md:h-[550px] h-[350px]'>
+        <Canvas
+          camera={{
+            position: [0, 0, 5],
+            fov: 75,
+            near: 0.1,
+            far: 1000,
+          }}>
+            <directionalLight intensity={2.5} position={[0,0,1]}/>
+            <ambientLight intensity={0.5}/>
+          <Suspense fallback={<Loader />}>
+          <Fox 
+          currentAnimation={currentAnimation}
+          position={[0.5,0.35,0]}
+          rotation={[12.6,-0.6,0]}
+          scale={[1,0.5,0.5]}
+          />
+          </Suspense>
+        </Canvas>
       </div>
     </section>
   )
