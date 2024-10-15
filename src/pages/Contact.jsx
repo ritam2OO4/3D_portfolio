@@ -4,17 +4,42 @@ function Contact() {
   const formRef = useRef();
   const [form, setForm] = useState({ name: "", email: "", message: "" })
   const [isLoading, setisLoading] = useState(false)
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setisLoading(true);
-    emailjs.sendForm(
-      "service_4h2rm8p",
-      "template_zlxh5fc"
-    )
-  }
+  
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_APP_EMAILJS_SEVICE_ID,
+        import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: form.name,
+          to_name: "Ritam",
+          from_email: form.email,
+          to_email: "ritamdevs2004@gmail.com",
+          message: form.message,
+        },
+        import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY,
+      );
+      
+      // Success case: handle showing success message
+      // Todo: Show success message
+      console.log("Email sent successfully!");
+      setForm({name:"",email:"",message:""})
+  
+    } catch (error) {
+      // Error case: handle showing error message
+      console.error("Failed to send email:", error);
+      // Todo: Show error message to the user (e.g., with an alert or a message on the page)
+      alert("Failed to send email. Please try again later.");
+    } finally {
+      setisLoading(false);
+      // Todo: Hide alert
+    }
+  };
+  
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: [e.target.value] })
-    console.log(form)
   }
   const handleFocus = () => {
 
