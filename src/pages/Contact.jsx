@@ -4,12 +4,16 @@ import { Suspense } from "react"
 import Loader from '../components/Loader';
 import { Canvas } from '@react-three/fiber';
 import Fox from "../models/Fox"
+import useAlert from '../hooks/useAlert';
+import Alert from '../components/Alert';
 // import Fox from ""
 function Contact() {
   const formRef = useRef();
   const [form, setForm] = useState({ name: "", email: "", message: "" })
   const [isLoading, setisLoading] = useState(false)
   const [currentAnimation, setCurrentAnimation] = useState("idle")
+  const { alert, showAlert, hideAlert } = useAlert();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setisLoading(true);
@@ -27,18 +31,18 @@ function Contact() {
         },
         import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY,
       );
-
-      // Success case: handle showing success message
-      // Todo: Show success message
+      showAlert({ show: true, text: "Message sent sucessfully!!", type: "success" })
       console.log("Email sent successfully!");
-      setTimeout(()=>{
+      setTimeout(() => {
         setCurrentAnimation("idle")
+        hideAlert();
         setForm({ name: "", email: "", message: "" })
-      },[2000])
+      }, [2000])
 
     } catch (error) {
       // Error case: handle showing error message
       console.error("Failed to send email:", error);
+      showAlert({ show: true, text: "Message not sent!!", type: "danger" })
       setCurrentAnimation("idle")
       // Todo: Show error message to the user (e.g., with an alert or a message on the page)
       alert("Failed to send email. Please try again later.");
@@ -55,6 +59,7 @@ function Contact() {
   const handleBlur = () => setCurrentAnimation("idle")
   return (
     <section className='relative flex lg:flex-row flex-col max-container'>
+      {alert.show && <Alert {...alert} />}
       <div className='flex-1 min-w-[50%] flex flex-col'>
         <h1 className='head-text'>Get in Touch</h1>
         <form className='w-full flex flex-col gap-7 mt-14'
@@ -123,15 +128,15 @@ function Contact() {
             near: 0.1,
             far: 1000,
           }}>
-            <directionalLight intensity={2.5} position={[0,0,1]}/>
-            <ambientLight intensity={0.5}/>
+          <directionalLight intensity={2.5} position={[0, 0, 1]} />
+          <ambientLight intensity={0.5} />
           <Suspense fallback={<Loader />}>
-          <Fox 
-          currentAnimation={currentAnimation}
-          position={[0.5,0.35,0]}
-          rotation={[12.6,-0.6,0]}
-          scale={[1,0.5,0.5]}
-          />
+            <Fox
+              currentAnimation={currentAnimation}
+              position={[0.5, 0.35, 0]}
+              rotation={[12.6, -0.6, 0]}
+              scale={[1, 0.5, 0.5]}
+            />
           </Suspense>
         </Canvas>
       </div>
