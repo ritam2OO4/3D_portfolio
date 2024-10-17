@@ -26,6 +26,13 @@ import arrow from './arrow.svg'
 import contact from './contact.svg'
 import soundon from './soundon.png'
 import soundoff from './soundoff.png'
+import voiceFlow from './voiceFlow.svg'
+import scratch from './Scratch.svg'
+import apple from './apple.svg'
+import promtopia from './promtopia.svg'
+import voice from "./voice.svg"
+import chessIcon from "./chessIcon.svg"
+import TrackIcon from "./TrackIcon.svg"
 
 export {
     css,
@@ -55,5 +62,12 @@ export {
     arrow,
     contact,
     soundon,
-    soundoff
+    soundoff,
+    voiceFlow,
+    scratch,
+    apple,
+    promtopia,
+    voice,
+    chessIcon,
+    TrackIcon,
 }
