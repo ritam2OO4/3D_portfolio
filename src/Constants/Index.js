@@ -113,9 +113,9 @@ export const skills = [
 export const experiences = [
     {
         title: "Full Stack Developer (Personal Projects)",
-        company_name: "Self-Learning & Projects",
+        project_name: "Self-Learning & Projects",
         icon: scratch,
-        iconBg: "#accbe1",
+        iconBg: "#c7e0f2",
         date: "August 2024 - Present",
         points: [
             "Designed and developed several fully responsive web applications using React.js, Node.js, and MongoDB.",
@@ -126,7 +126,7 @@ export const experiences = [
     },
     {
         title: "Frontend Developer (Open-AI Contributions)",
-        company_name: "OpenAi & Wishper.io",
+        project_name: "OpenAi & Wishper.io",
         icon: voiceFlow,
         iconBg: "#fbc3bc",
         date: "feb 2024 - March 2024",
@@ -139,7 +139,7 @@ export const experiences = [
     },
     {
         title: "Web Developer (3D Projects)",
-        company_name: "Freelance & Client Projects",
+        project_name: "Freelance & Client Projects",
         icon: apple,
         iconBg: "#A2AAAD",
         date: "Nov 2023 - Dec 2023",
