@@ -3,7 +3,7 @@ import Navbar from './components/Navbar'
 import { Home, About, Project, Contact } from './pages'
 export default function App() {
   return (
-    <main className='bg-slate-300/20'>
+    <main className='bg-slate-300/20 h-[100vh]'>
       <Router>
         <Navbar />
         <Routes>
