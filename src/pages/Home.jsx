@@ -7,9 +7,22 @@ import Plane from '../models/Plane';
 import Bird from '../models/Bird';
 import Homeinfo from '../components/Homeinfo';
 import sakura from "../assets/sakura.mp3"
+import { soundoff, soundon } from '../assets/icons';
 function Home() {
+  const audioRef = useRef(new Audio(sakura))
+  audioRef.current.loop = true;
+  audioRef.current.volume = 0.4;
   const [currentStage, setCurrentStage] = useState(1);
+  const [isPlayingMusic, setisPlayingMusic] = useState(false);
   const [isRotating, setIsRotating] = useState(false);
+
+  useEffect(() => {
+    if (isPlayingMusic) { audioRef.current.play() 
+     };
+    return ()=>{
+      audioRef.current.pause()
+    };
+  }, [isPlayingMusic])
 
   const adjustIslandforScreenSize = () => {
     const screenSize = window.innerWidth;
@@ -55,6 +68,13 @@ function Home() {
           <Plane isRotating={isRotating} rotation={[0, 20, 0]} scale={PlaneScale} position={PlanePosition} />
         </Suspense>
       </Canvas>
+      <div className='absolute bottom-2 left-2'>
+        <img src={
+          isPlayingMusic ? soundon : soundoff
+        } alt="sound"
+          className='h-10 w-10 object-contain cursor-pointer'
+          onClick={() => setisPlayingMusic(!isPlayingMusic)} />
+      </div>
     </section>
   );
 }
