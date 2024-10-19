@@ -159,7 +159,7 @@ export const socialLinks = [
     {
         name: 'Contact',
         iconUrl: contact,
-        link: '/ritamdev2004@gmail.com',
+        link: '/contact',
     },
     {
         name: 'GitHub',

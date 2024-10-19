@@ -53,40 +53,41 @@ function Contact() {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-  
+
   const handleFocus = () => setCurrentAnimation("walk");
   const handleBlur = () => setCurrentAnimation("idle");
 
   return (
     <section className='relative flex lg:flex-row flex-col max-container h-[100vh]'>
       {alert.show && <Alert {...alert} />}
-      
+
       {/* Social Links Section */}
       <div className='flex-1 min-w-[50%] flex flex-col'>
-          <h1 className='head-text'>Get in Touch</h1>
+        <h1 className='head-text'>Get in Touch</h1>
         <div className="flex gap-5 mt-4 mb-8 flex-col lg:flex-row">
-          {socialLinks.map((link) => (
-           <a 
-           key={link.name} 
-           href={link.link} 
-           target='_blank' 
-           rel='noopener noreferrer' 
-           className="flex flex-wrap flex-shrink-2 items-center gap-3 px-1 py-2 bg-gray-100  hover:bg-blue-100 rounded-lg shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-105
-                      sm:px-1 sm:py-2 md:px-4 md:py-3 lg:px-5 lg:py-3 w-full md:w-auto "
-         >
-           <img 
-             src={link.iconUrl} 
-             alt={link.name} 
-             className="w-8 h-8 rounded-full object-cover border-2 border-blue-500
-                        sm:w-6 sm:h-6 md:w-8 md:h-8 lg:w-10 lg:h-10" 
-           />
-           <span className="font-semibold text-gray-700 hover:text-blue-600
+          {socialLinks.map((link, index) => (
+            <a
+              key={link.name}
+              href={link.link}
+              target='_blank'
+              rel='noopener noreferrer'
+              className={`flex flex-wrap flex-shrink-2 items-center gap-3 px-1 py-2 bg-gray-100 hover:bg-blue-100 rounded-lg shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-105
+              sm:px-1 sm:py-2 md:px-4 md:py-3 lg:px-5 lg:py-3 w-full md:w-auto
+              ${index === 0 && "pointer-events-none"}`}
+            >
+              <img
+                src={link.iconUrl}
+                alt={link.name}
+                className="w-8 h-8 rounded-full object-cover border-2 border-blue-500
+                        sm:w-6 sm:h-6 md:w-8 md:h-8 lg:w-10 lg:h-10"
+              />
+              <span className="font-semibold text-gray-700 hover:text-blue-600
                             text-sm sm:text-xs md:text-sm lg:text-base">
-             {link.name}
-           </span>
-         </a>
-         
-          
+                {link.name} {index === 0 && "- '85058 11853'"}
+              </span>
+            </a>
+
+
           ))}
         </div>
 

@@ -1,4 +1,4 @@
-import { Suspense, useState } from 'react';
+import { Suspense, useState, useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import Loader from '../components/Loader';
 import Island from '../models/Island';
@@ -6,10 +6,11 @@ import Sky from '../models/Sky';
 import Plane from '../models/Plane';
 import Bird from '../models/Bird';
 import Homeinfo from '../components/Homeinfo';
+import sakura from "../assets/sakura.mp3"
 function Home() {
   const [currentStage, setCurrentStage] = useState(1);
   const [isRotating, setIsRotating] = useState(false);
-  
+
   const adjustIslandforScreenSize = () => {
     const screenSize = window.innerWidth;
     let screenScale = null;
@@ -50,8 +51,8 @@ function Home() {
           <hemisphereLight skyColor='#b1e1ff' groundColor='#000000' intensity={1} />
           <Bird />
           <Sky isRotating={isRotating} />
-          <Island   setCurrentStage={setCurrentStage} scale={islandScale} position={islandPosition} rotation={islandRotation} isRotating={isRotating} setIsRotating={setIsRotating} />
-          <Plane isRotating={isRotating} rotation={[0,20,0]} scale={PlaneScale} position={PlanePosition} />
+          <Island setCurrentStage={setCurrentStage} scale={islandScale} position={islandPosition} rotation={islandRotation} isRotating={isRotating} setIsRotating={setIsRotating} />
+          <Plane isRotating={isRotating} rotation={[0, 20, 0]} scale={PlaneScale} position={PlanePosition} />
         </Suspense>
       </Canvas>
     </section>
