@@ -29,7 +29,8 @@ import {
     promtopia,
     voiceFlow,
     voice,
-    chessIcon
+    chessIcon,
+    xicon
 } from "../assets/icons";
 
 export const skills = [
@@ -169,6 +170,11 @@ export const socialLinks = [
         name: 'LinkedIn',
         iconUrl: linkedin,
         link: 'https://www.linkedin.com/in/ritam-pan-395696289',
+    },
+    {
+        name: 'X',
+        iconUrl: xicon,
+        link: 'https://x.com/2004_ritam',
     }
 ];
 

@@ -33,6 +33,7 @@ import promtopia from './promtopia.svg'
 import voice from "./voice.svg"
 import chessIcon from "./chessIcon.svg"
 import TrackIcon from "./TrackIcon.svg"
+import xicon from "./x.svg"
 
 export {
     css,
@@ -70,4 +71,5 @@ export {
     voice,
     chessIcon,
     TrackIcon,
+    xicon
 }
