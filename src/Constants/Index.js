@@ -172,7 +172,7 @@ export const socialLinks = [
         link: 'https://www.linkedin.com/in/ritam-pan-395696289',
     },
     {
-        name: 'X',
+        name: 'Twitter',
         iconUrl: xicon,
         link: 'https://x.com/2004_ritam',
     }

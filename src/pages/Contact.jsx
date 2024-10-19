@@ -1,23 +1,24 @@
-import React, { useState, useRef } from 'react'
-import emailjs from "@emailjs/browser"
-import { Suspense } from "react"
+import React, { useState, useRef } from 'react';
+import emailjs from "@emailjs/browser";
+import { Suspense } from "react";
 import Loader from '../components/Loader';
 import { Canvas } from '@react-three/fiber';
-import Fox from "../models/Fox"
+import Fox from "../models/Fox";
 import useAlert from '../hooks/useAlert';
 import Alert from '../components/Alert';
-// import Fox from ""
+import { socialLinks } from '../Constants/Index.js'; // Import social links
+
 function Contact() {
   const formRef = useRef();
-  const [form, setForm] = useState({ name: "", email: "", message: "" })
-  const [isLoading, setisLoading] = useState(false)
-  const [currentAnimation, setCurrentAnimation] = useState("idle")
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [isLoading, setisLoading] = useState(false);
+  const [currentAnimation, setCurrentAnimation] = useState("idle");
   const { alert, showAlert, hideAlert } = useAlert();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setisLoading(true);
-    setCurrentAnimation("hit")
+    setCurrentAnimation("hit");
     try {
       await emailjs.send(
         import.meta.env.VITE_APP_EMAILJS_SEVICE_ID,
@@ -31,37 +32,65 @@ function Contact() {
         },
         import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY,
       );
-      showAlert({ show: true, text: "Message sent sucessfully!!", type: "success" })
+      showAlert({ show: true, text: "Message sent successfully!!", type: "success" });
       console.log("Email sent successfully!");
       setTimeout(() => {
-        setCurrentAnimation("idle")
+        setCurrentAnimation("idle");
         hideAlert();
-        setForm({ name: "", email: "", message: "" })
-      }, [2000])
+        setForm({ name: "", email: "", message: "" });
+      }, [2000]);
 
     } catch (error) {
-      // Error case: handle showing error message
       console.error("Failed to send email:", error);
-      showAlert({ show: true, text: "Message not sent!!", type: "danger" })
-      setCurrentAnimation("idle")
-      // Todo: Show error message to the user (e.g., with an alert or a message on the page)
+      showAlert({ show: true, text: "Message not sent!!", type: "danger" });
+      setCurrentAnimation("idle");
       alert("Failed to send email. Please try again later.");
     } finally {
       setisLoading(false);
-      // Todo: Hide alert
     }
   };
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: [e.target.value] })
-  }
-  const handleFocus = () => setCurrentAnimation("walk")
-  const handleBlur = () => setCurrentAnimation("idle")
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+  
+  const handleFocus = () => setCurrentAnimation("walk");
+  const handleBlur = () => setCurrentAnimation("idle");
+
   return (
-    <section className='relative flex lg:flex-row flex-col max-container'>
+    <section className='relative flex lg:flex-row flex-col max-container h-[100vh]'>
       {alert.show && <Alert {...alert} />}
+      
+      {/* Social Links Section */}
       <div className='flex-1 min-w-[50%] flex flex-col'>
-        <h1 className='head-text'>Get in Touch</h1>
+          <h1 className='head-text'>Get in Touch</h1>
+        <div className="flex gap-5 mt-4 mb-8 flex-col lg:flex-row">
+          {socialLinks.map((link) => (
+           <a 
+           key={link.name} 
+           href={link.link} 
+           target='_blank' 
+           rel='noopener noreferrer' 
+           className="flex flex-wrap flex-shrink-2 items-center gap-3 px-1 py-2 bg-gray-100  hover:bg-blue-100 rounded-lg shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-105
+                      sm:px-1 sm:py-2 md:px-4 md:py-3 lg:px-5 lg:py-3 w-full md:w-auto "
+         >
+           <img 
+             src={link.iconUrl} 
+             alt={link.name} 
+             className="w-8 h-8 rounded-full object-cover border-2 border-blue-500
+                        sm:w-6 sm:h-6 md:w-8 md:h-8 lg:w-10 lg:h-10" 
+           />
+           <span className="font-semibold text-gray-700 hover:text-blue-600
+                            text-sm sm:text-xs md:text-sm lg:text-base">
+             {link.name}
+           </span>
+         </a>
+         
+          
+          ))}
+        </div>
+
+        {/* Contact Form */}
         <form className='w-full flex flex-col gap-7 mt-14'
           onSubmit={handleSubmit}
           ref={formRef}>
@@ -120,6 +149,8 @@ function Contact() {
           </div>
         </form>
       </div>
+
+      {/* 3D Animation Section */}
       <div className='lg:w-1/2 w-full lg:h-auto md:h-[550px] h-[350px]'>
         <Canvas
           camera={{
@@ -144,4 +175,4 @@ function Contact() {
   )
 }
 
-export default Contact
+export default Contact;
