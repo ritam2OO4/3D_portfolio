@@ -83,7 +83,7 @@ function Contact() {
               />
               <span className="font-semibold text-gray-700 hover:text-blue-600
                             text-sm sm:text-xs md:text-sm lg:text-base">
-                {link.name} {index === 0 && "- '85058 11853'"}
+                {link.name} {index === 0 && "- '8368303391'"}
               </span>
             </a>
 
